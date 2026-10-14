@@ -1,0 +1,126 @@
+version: 2.1
+
+orbs:
+  coveralls: coveralls/coveralls@2.2.5
+
+executors:
+  py:
+    docker:
+      - image: cimg/python:3.14 # = requires-python de pyproject.toml y FROM del Dockerfile
+  node:
+    docker:
+      - image: cimg/node:22.21 # = FROM de frontend/Dockerfile
+
+commands:
+  setup-uv:
+    steps:
+      - checkout
+      - run:
+          name: Install uv
+          command: pip install uv
+      - restore_cache:
+          keys:
+            - uv-{{ checksum "uv.lock" }}
+      - run:
+          name: Install dependencies
+          command: uv sync --frozen
+      - save_cache:
+          key: uv-{{ checksum "uv.lock" }}
+          paths:
+            - ~/.cache/uv
+
+jobs:
+  test-python:
+    executor: py
+    environment:
+      SECRET_KEY: "clave_secreta_para_tests_circleci_32b+" # no es secreto real; solo firma tokens de test
+      PYTHONPATH: "."
+    steps:
+      - setup-uv
+      - run:
+          name: Lint
+          command: uv run ruff check app tests && uv run ruff format --check app tests
+      - run:
+          name: Run tests with coverage
+          command: |
+            mkdir -p test-results
+            uv run coverage run --source=app -m pytest tests/ -v --junitxml=test-results/junit.xml
+            uv run coverage lcov -o coverage.lcov
+      - coveralls/upload:
+          coverage_file: coverage.lcov
+      - store_test_results:
+          path: test-results
+
+  migrations:
+    docker:
+      - image: cimg/python:3.14
+      - image: cimg/postgres:16.4
+        environment:
+          POSTGRES_USER: ci
+          POSTGRES_PASSWORD: ci
+          POSTGRES_DB: ci_db
+    environment:
+      DB_USER: ci
+      DB_PASSWORD: ci
+      DB_NAME: ci_db
+      DB_HOST: localhost # los contenedores secundarios comparten red con el primario
+      DB_PORT: "5432"
+      SECRET_KEY: "clave_secreta_para_tests_circleci_32b+"
+    steps:
+      - setup-uv
+      - run:
+          name: Wait for Postgres
+          command: |
+            uv run python - \<<'EOF'
+            import socket, time
+            for _ in range(30):
+                try:
+                    socket.create_connection(("localhost", 5432), timeout=1).close()
+                    break
+                except OSError:
+                    time.sleep(1)
+            else:
+                raise SystemExit("Postgres no respondió")
+            EOF
+      - run:
+          name: Migrations round-trip
+          command: |
+            uv run alembic upgrade head
+            uv run alembic check
+            uv run alembic downgrade base
+            uv run alembic upgrade head
+      - run:
+          name: Seed runs on a migrated database
+          command: uv run python -m app.seed
+
+  test-frontend:
+    executor: node
+    working_directory: ~/project/frontend
+    steps:
+      - checkout:
+          path: ~/project
+      - restore_cache:
+          keys:
+            - npm-{{ checksum "package-lock.json" }}
+      - run:
+          name: Install dependencies
+          command: npm ci
+      - save_cache:
+          key: npm-{{ checksum "package-lock.json" }}
+          paths:
+            - ~/.npm
+      - run:
+          name: Typecheck and build
+          command: npm run build
+      - run:
+          name: Tests
+          command: npx vitest run --reporter=junit --outputFile=test-results/junit.xml
+      - store_test_results:
+          path: test-results
+
+workflows:
+  build-and-test:
+    jobs:
+      - test-python
+      - migrations
+      - test-frontend

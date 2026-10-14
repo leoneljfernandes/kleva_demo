@@ -1,0 +1,40 @@
+.card {
+  justify-self: end;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  max-width: 640px;
+  padding: 36px 28px 28px;
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  text-align: center;
+}
+
+.role {
+  color: var(--muted);
+}
+
+.meta {
+  color: var(--muted);
+  font-size: var(--text-eyebrow);
+}
+
+.status {
+  margin-top: 14px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 12px;
+  margin-top: 20px;
+}
+
+.notice {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: var(--text-small);
+}

@@ -1,0 +1,22 @@
+scaffolding-fastapi-backends
+building-kleva-collections
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+*.db
+
+# Secretos
+.env
+
+# Cobertura / CI
+.coverage
+coverage.lcov
+junit.xml
+test-results/
+
+# Frontend
+frontend/node_modules/
+frontend/dist/

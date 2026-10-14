@@ -1,0 +1,97 @@
+.stage {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  align-items: center;
+  column-gap: clamp(16px, 3vw, 48px);
+  padding: 24px;
+  overflow: hidden;
+  border-radius: var(--radius-frame);
+  background: var(--stage);
+}
+
+/* grano: ruido SVG sobre el panel lila */
+.stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.12;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.solo {
+  grid-template-columns: 1fr;
+  justify-items: center;
+  height: 100%;
+  min-height: 420px;
+}
+
+.orb {
+  position: relative;
+  justify-self: start;
+  width: min(278px, 86%);
+  aspect-ratio: 1;
+  margin-left: clamp(16px, 5.4%, 76px);
+  overflow: hidden;
+  border-radius: 50%;
+  background: var(--orb-base);
+  filter: saturate(0.5);
+}
+
+/* nácar: el conic desenfocado borra la costura del centro */
+.orb::before {
+  content: "";
+  position: absolute;
+  inset: -25%;
+  background: conic-gradient(
+    from 210deg at 55% 50%,
+    var(--orb-1),
+    var(--orb-2) 18%,
+    var(--orb-3) 40%,
+    var(--orb-4) 70%,
+    var(--orb-1)
+  );
+  filter: blur(22px);
+}
+
+/* brillo arriba a la izquierda + volumen abajo a la derecha */
+.orb::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%, var(--orb-light) 0 6%, transparent 34%);
+  box-shadow: inset -18px -24px 48px var(--orb-shade);
+}
+
+.solo .orb {
+  justify-self: center;
+  margin-left: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .live {
+    animation: breathe 2.4s ease-in-out infinite alternate;
+  }
+
+  @keyframes breathe {
+    to {
+      transform: scale(1.03);
+      filter: saturate(0.75);
+    }
+  }
+}
+
+@media (width <= 768px) {
+  .stage {
+    grid-template-columns: 1fr;
+    padding: 12px;
+  }
+
+  .stage:not(.solo) .orb {
+    display: none;
+  }
+}

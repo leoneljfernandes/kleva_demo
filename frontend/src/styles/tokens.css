@@ -1,0 +1,63 @@
+/* Única fuente de colores, tipografía, radios y layout. Valores tomados de kleva.co (--site-*). */
+:root {
+  /* color: valores de kleva.co */
+  --paper: #faf9f7; /* fondo de página y nav */
+  --surface: #fff; /* tarjetas, inputs, tablas */
+  --tint: #f1eeef; /* hover de filas/tarjetas, turnos del deudor */
+  --line: #e3dfe0; /* bordes y separadores */
+  --line-strong: #cfc9cc; /* borde de inputs */
+  --ink: #242124; /* texto, botón primario */
+  --ink-hover: #423d42; /* hover del primario */
+  --muted: #6d6870; /* texto secundario, eyebrows */
+  --accent: #8f286a; /* ciruela: hover, foco, estado activo */
+  --accent-soft: #f4e8f0;
+  --stage: #8f8396; /* panel lila detrás de la esfera */
+  --on-ink: #fff;
+
+  /* color semántico propio (no existe en kleva.co): apagado para no competir con el acento */
+  --ok: #2f6b4f;
+  --ok-soft: #e7f0eb;
+  --bad: #8a3b2e;
+  --bad-soft: #f5e8e5;
+
+  /* esfera */
+  --orb-light: #fff;
+  --orb-1: #e9e1ee;
+  --orb-2: #f3eccf;
+  --orb-3: #cdbfda;
+  --orb-4: #9d8aab;
+  --orb-base: #b7a7c4;
+  --orb-shade: #5e4f6a55;
+
+  /* tipografía */
+  --font-display: "Archivo Variable", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
+  --text-h1: clamp(34px, 4.6vw, 60px);
+  --text-h2: 32px;
+  --text-intro: clamp(19px, 1.6vw, 22px);
+  --text-body: 16px;
+  --text-small: 14px;
+  --text-eyebrow: 13px;
+  --text-stat: 40px;
+  --text-wordmark: 28px;
+  --text-tag: 10px;
+
+  /* forma y layout */
+  --radius-card: 12px;
+  --radius-frame: 4px;
+  --radius-pill: 100px;
+  --max: 1256px;
+  --gutter: clamp(20px, 6vw, 96px);
+  --nav-height: 72px;
+  --ease: cubic-bezier(0.2, 0.65, 0.3, 1);
+  --fast: 0.16s;
+  --shadow-menu: 0 12px 32px #24212414;
+}
+
+@media (width <= 768px) {
+  :root {
+    --text-h1: clamp(34px, 10.2vw, 54px);
+    --text-h2: 26px;
+    --text-stat: 32px;
+  }
+}

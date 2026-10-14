@@ -1,0 +1,43 @@
+[project]
+name = "kleva-collections"
+version = "0.1.0"
+description = "Demo de agentes de cobranza con llamadas emuladas (challenge técnico Kleva)"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "alembic>=1.20.0",
+    "asyncpg>=0.32.0",
+    "email-validator>=2.3.0",
+    "faker>=40.43.0",
+    "fastapi>=0.143.0",
+    "opentelemetry-exporter-otlp-proto-grpc>=1.45.1",
+    "opentelemetry-instrumentation-fastapi>=0.66b1",
+    "opentelemetry-instrumentation-logging>=0.66b1",
+    "opentelemetry-instrumentation-sqlalchemy>=0.66b1",
+    "opentelemetry-sdk>=1.45.1",
+    "prometheus-client>=0.26.0",
+    "prometheus-fastapi-instrumentator>=8.1.0",
+    "pwdlib[argon2,bcrypt]>=0.3.1",
+    "pydantic>=2.14.1",
+    "pydantic-settings>=2.15.0",
+    "pyjwt>=2.15.1",
+    "python-multipart>=0.0.32",
+    "sqlalchemy[asyncio]>=2.0,<2.1",  # opentelemetry-instrumentation-sqlalchemy todavía no soporta 2.1
+    "uvicorn[standard]>=0.54.0",
+]
+
+[tool.ruff]
+line-length = 110
+target-version = "py314"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[dependency-groups]
+dev = [
+    "aiosqlite>=0.22.1",
+    "coverage>=7.16.2",
+    "httpx2>=2.13.1",
+    "pytest>=9.1.1",
+    "ruff>=0.17.0",
+]

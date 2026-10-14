@@ -1,0 +1,14 @@
+.venv
+__pycache__
+*.pyc
+.git
+.gitignore
+.env
+.pytest_cache
+.ruff_cache
+tests
+frontend
+monitoring
+scaffolding-fastapi-backends
+building-kleva-collections
+*.db

@@ -1,0 +1,53 @@
+.transcript {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 20px;
+  list-style: none;
+  border-radius: var(--radius-card);
+  background: var(--paper);
+}
+
+.line {
+  max-width: 75%;
+  padding: 14px 18px;
+  border-radius: var(--radius-card);
+}
+
+.speaker {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--muted);
+  font-size: var(--text-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.agent {
+  align-self: flex-start;
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.debtor {
+  align-self: flex-end;
+  background: var(--tint);
+}
+
+.system {
+  align-self: center;
+  max-width: 100%;
+  padding: 2px 0;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-eyebrow);
+  text-align: center;
+}
+
+@media (width <= 768px) {
+  .line {
+    max-width: 90%;
+  }
+}

@@ -1,0 +1,66 @@
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--text-small);
+  font-weight: 500;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--muted);
+}
+
+.active .dot {
+  background: var(--accent);
+}
+
+.active {
+  color: var(--accent);
+}
+
+.paused {
+  color: var(--muted);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .active .dot {
+    animation: pulse 1.6s var(--ease) infinite;
+  }
+
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 var(--accent);
+    }
+    70%,
+    100% {
+      box-shadow: 0 0 0 6px transparent;
+    }
+  }
+}
+
+.outcome {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  font-size: var(--text-eyebrow);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.payment_promise {
+  background: var(--ok-soft);
+  color: var(--ok);
+}
+
+.refused {
+  background: var(--bad-soft);
+  color: var(--bad);
+}
+
+.no_answer {
+  background: var(--tint);
+  color: var(--ink);
+}
