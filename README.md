@@ -1,7 +1,7 @@
 # Kleva · Agentes de cobranza (demo)
 
-[![CircleCI](https://dl.circleci.com/status-badge/img/circleci/<org>/<project>/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/circleci/<org>/<project>/tree/main)
-[![Coverage Status](https://coveralls.io/repos/github/<usuario>/<repo>/badge.svg?branch=main)](https://coveralls.io/github/<usuario>/<repo>?branch=main)
+[![CircleCI](https://dl.circleci.com/status-badge/img/circleci/XZTndtAwv9XQN3WLyPAvnc/D3ybhcijZg5kwmstvXqcNX/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/circleci/XZTndtAwv9XQN3WLyPAvnc/D3ybhcijZg5kwmstvXqcNX/tree/main)
+[![Coverage Status](https://coveralls.io/repos/github/leoneljfernandes/kleva_demo/badge.svg?branch=main)](https://coveralls.io/github/leoneljfernandes/kleva_demo?branch=main)
 
 Challenge técnico. Usuarios Kleva administran **agentes de cobranza**. Un agente activo busca deudores elegibles según su configuración (país, producto y días mínimos de atraso) y los "llama". No hay IA ni MCP: la llamada es una **emulación aleatoria con semilla inyectable**, detrás de un puerto (`CallEngine`) que mañana puede implementar un LLM sin tocar el resto.
 
